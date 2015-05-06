@@ -1,0 +1,21 @@
+---
+title: "Hierarchical Clustering"
+author: "JP"
+date: "Wednesday, May 06, 2015"
+output: html_document
+---
+
+Informace o principu metod viz "Knowledge-Clustering".
+
+#Použité balíčky
+
+První je [cluster](http://cran.r-project.org/web/packages/cluster/cluster.pdf)
+
+```{r}
+  install.packages("cluster")
+```
+#Aglomerativní Shlukování
+
+#Divisivní shlukování
+
+
