@@ -7,15 +7,47 @@ output: html_document
 
 Informace o principu metod viz "Knowledge-Clustering".
 
-#Použité balíčky
+#Použité balíčky a informační zdroje
 
-První je [cluster](http://cran.r-project.org/web/packages/cluster/cluster.pdf)
+První je [cluster](http://cran.r-project.org/web/packages/cluster/cluster.pdf). Další informace o
+hierarchickém shlukování a využití balíčků jsou i [zde](http://en.wikibooks.org/wiki/
+Data_Mining_Algorithms_In_R/Clustering/Hierarchical_Clustering).
+
+Další zajímaný balík je [fpc - flexible procedures for clustering](http://cran.r-project.org/web/packages/fpc/fpc.pdf).
+
+Pak stojí zato se ještě juknout [sem](http://www2.stat.unibo.it/montanari/Didattica/Multivariate/CA_lab.pdf)
+
+**udělat dist function**
 
 ```{r}
-  install.packages("cluster")
+  #install.packages("cluster")
+  #install.packages("fpc")
 ```
+
 #Aglomerativní Shlukování
+
+```{r}
+library(cluster) 
+
+data(votes.repub)
+agn1 <- agnes(votes.repub, metric = "manhattan", stand = TRUE)
+agn1
+plot(agn1)
+op <- par(mfrow=c(2,2))
+agn2 <- agnes(daisy(votes.repub), diss = TRUE, method = "complete")
+plot(agn2)
+```
+
 
 #Divisivní shlukování
 
+```{r}
+library(cluster)
+
+data(votes.repub)
+dv <- diana(votes.repub, metric = "manhattan", stand = TRUE)
+print(dv)
+plot(dv)
+
+```
 
