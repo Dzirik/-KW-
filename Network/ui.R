@@ -1,4 +1,12 @@
-shinyUI(fluidPage(
+## app.R ##
+library(shiny)
+library(shinydashboard)
+library(networkD3)
+
+#
+library(RCurl)
+
+ui <- dashboardPage(
   ##celkový vzhled----------------------------------------------------------------------------------
   skin="yellow",
   
@@ -8,37 +16,85 @@ shinyUI(fluidPage(
   ## Sidebar content--------------------------------------------------------------------------------
   dashboardSidebar(
     sidebarMenu(
+      #template:
+      #menuItem("Popisek Itemu", tabName="názevProKód",icon=icon("jménoIkony"),
+      #  menuSubItem("K-means",tabName="K-means",icon=icon("gears")) 
+      #)
       menuItem("About", tabName="About",icon=icon("file")
       ),
-      menuItem("Simple Network", tabName = "Partitioning Clustering", icon = icon("arrows-alt") #,
-               #menuSubItem("K-means",tabName="K-means",icon=icon("gears"))                      
+      menuItem("Simple Network", tabName = "SimpleNetwork", icon = icon("arrows-alt") #,                    
       ),
-      menuItem("Second Vatiant", tabName = "hierarchical clustering", icon = icon("arrows-alt") #,
-               #menuSubItem("AGNES",tabName="AGNES",icon=icon("gears")),
-               #menuSubItem("DIANA",tabName="DIANA",icon=icon("gears"))
+      menuItem("Force Network", tabName = "ForceNetwork", icon = icon("arrows-alt") #,
       )
     )
   ),
   
-  
   ## Body content-----------------------------------------------------------------------------------
   dashboardBody(
     tabItems(
-      # First tab content
-      tabItem(tabName = "Simple Network",
-              fluidRow(
-                box(plotOutput("plot1", height = 250)),
-                
-                box(
-                  title = "Controls",
-                  sliderInput("slider", "Number of observations:", 1, 100, 50)
-                )
-              )
+      #About content
+      tabItem(tabName="About",
+              h2("tady bude text")
       ),
       
-      #
-      #tabItem(tabName= "K-means"
-      #),
+      #Simple Network content
+      tabItem(tabName="SimpleNetwork",
+        fluidRow(        
+          box(
+            title="Nadpis",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=300,
+            "Box content here", 
+            br(), 
+            "More box content",
+            sliderInput("slider", "Slider input:", 1, 100, 50),
+            textInput("text", "Text input:")
+          ),
+          
+          box(
+            sliderInput("slide","Slider input:",1,10,20)
+          )
+        ),
+        
+        fluidRow(
+          box(
+            simpleNetworkOutput("obrSimple"),
+            width=12,
+            height=1500
+          )
+        )
+      ),
+      
+      #Force network content
+      tabItem(tabName="ForceNetwork",
+        fluidRow(        
+          box(
+            title="Nadpis",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=300,
+            "Box content here", 
+            br(), 
+            "More box content",
+            sliderInput("slider", "Slider input:", 1, 100, 50),
+            textInput("text", "Text input:")
+          ),
+          
+          box(
+            sliderInput("slide","Slider input:",1,10,20),
+            height=300
+          )
+        ),
+        
+        fluidRow(
+          box(
+            forceNetworkOutput("obrForce"),
+            width=12,
+            height=1000
+          )      
+        )
+      )
     )
   )  
-))
+)    

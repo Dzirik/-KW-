@@ -3,6 +3,9 @@ library(shiny)
 library(shinydashboard)
 library(networkD3)
 
+#
+library(RCurl)
+
 ui <- dashboardPage(
   ##celkový vzhled----------------------------------------------------------------------------------
   skin="yellow",
@@ -34,17 +37,9 @@ ui <- dashboardPage(
         h2("tady bude text")
       ),
       
-      #Force network content
-      tabItem(tabName="ForceNetwork",
-        h2("tady bude obsah")
-      ),
-      
       #Simple Network content
       tabItem(tabName="SimpleNetwork",
-        fluidRow(
-          box(plotOutput("plot1")
-          ),
-          
+        fluidRow(        
           box(
             title="Nadpis",
             solidHeader=TRUE,
@@ -55,9 +50,51 @@ ui <- dashboardPage(
             "More box content",
             sliderInput("slider", "Slider input:", 1, 100, 50),
             textInput("text", "Text input:")
+          ),
+          
+          box(
+            sliderInput("slide","Slider input:",1,10,20)
+          )
+        ),
+        
+        fluidRow(
+          box(
+            simpleNetworkOutput("obrSimple"),
+            width=12,
+            height=1500
           )
         )
-      )      
+      ),
+      
+      #Force network content
+      tabItem(tabName="ForceNetwork",
+        fluidRow(        
+          box(
+            title="Nadpis",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+              height=300,
+              "Box content here", 
+              br(), 
+              "More box content",
+              sliderInput("slider", "Slider input:", 1, 100, 50),
+              textInput("text", "Text input:")
+            ),
+                
+            box(
+              sliderInput("slide","Slider input:",1,10,20),
+              height=300
+            )
+          ),
+              
+        fluidRow(
+          box(
+            forceNetworkOutput("obrForce"),
+            width=12,
+            height=1000
+          )      
+        )
+      )    
     )
   )  
 )    
@@ -66,12 +103,29 @@ ui <- dashboardPage(
 ### SERVER -----------------------------------------------------------------------------------------
 
 server <- function(input, output) {
-  set.seed(122)
-  histdata <- rnorm(500)
-   
-  output$plot1 <- renderPlot({
-    data <- histdata[seq_len(input$slider)]
-    hist(data)
+  
+  #-------------------------------------------------------------------------------------------------
+  # Create fake data
+  src <- c("A", "A", "A", "A",
+           "B", "B", "C", "C", "D")
+  target <- c("B", "C", "D", "J",
+              "E", "F", "G", "H", "I")
+  networkData <- data.frame(src, target)
+  
+  # Plot
+  output$obrSimple<-renderSimpleNetwork({
+    simpleNetwork(networkData, height=NULL,width=NULL)
+  })
+  
+  #-------------------------------------------------------------------------------------------------
+  data(MisLinks)
+  data(MisNodes)
+  output$obrForce <- renderForceNetwork({
+    forceNetwork(Links = MisLinks, Nodes = MisNodes,
+                 Source = "source", Target = "target",
+                 Value = "value", NodeID = "name", zoom=TRUE,
+                 Group = "group", opacity = input$opacity, 
+                 height=NULL, width=NULL)
   })
 }
 
