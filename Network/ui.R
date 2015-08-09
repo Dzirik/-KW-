@@ -34,34 +34,38 @@ ui <- dashboardPage(
     tabItems(
       #About content
       tabItem(tabName="About",
-              h2("tady bude text")
+        box(
+          title="About this program.",
+          "This is an example of visualization graphs using shiny and network3D.",
+          br(),
+          "I used only simple data, which I personaly generated or taken from RCurl package from R.
+          The reason for this was that I wanted only easily obtained small data sets and spent much 
+          time with plaing with their visualization.",
+          br(),
+          "The advantage of this approach is interactivity, just play with nodes, edges, and network using a mouse.",
+          width=12
+        )
       ),
       
       #Simple Network content
       tabItem(tabName="SimpleNetwork",
         fluidRow(        
           box(
-            title="Nadpis",
+            title="Settings",
             solidHeader=TRUE,
             collapsible=TRUE,
-            height=300,
-            "Box content here", 
-            br(), 
-            "More box content",
-            sliderInput("slider", "Slider input:", 1, 100, 50),
-            textInput("text", "Text input:")
-          ),
-          
-          box(
-            sliderInput("slide","Slider input:",1,10,20)
+            height=200,
+            "You can choose distance of edges in the graph below.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderSimple", label="Edge distance:", 150, min=0, max=300, step=10)
           )
         ),
         
         fluidRow(
           box(
             simpleNetworkOutput("obrSimple"),
-            width=12,
-            height=1500
+            width=12
           )
         )
       ),
@@ -70,28 +74,31 @@ ui <- dashboardPage(
       tabItem(tabName="ForceNetwork",
         fluidRow(        
           box(
-            title="Nadpis",
+            title="Settings",
             solidHeader=TRUE,
             collapsible=TRUE,
-            height=300,
-            "Box content here", 
-            br(), 
-            "More box content",
-            sliderInput("slider", "Slider input:", 1, 100, 50),
-            textInput("text", "Text input:")
+            height=200,
+            "You can choose opacity for the graph below.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderOpacity", label="Opacity:", 0.5, min=0, max=1, step=0.1)
           ),
           
           box(
-            sliderInput("slide","Slider input:",1,10,20),
-            height=300
+            title="Data Description",
+            solidHeader=TRUE,
+            collapsing=TRUE,
+            height=200,
+            "A data file of links from Knuth's Les Miserables characters data base.",
+            br(),
+            "A data set with 254 observations of 3 variables."
           )
         ),
         
         fluidRow(
           box(
             forceNetworkOutput("obrForce"),
-            width=12,
-            height=1000
+            width=12
           )      
         )
       )

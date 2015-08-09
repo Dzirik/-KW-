@@ -53,7 +53,7 @@ ui <- dashboardPage(
           ),
           
           box(
-            sliderInput("slide","Slider input:",1,10,20)
+            sliderInput("slideSimple","Slider input:",10,10,100)
           )
         ),
         
