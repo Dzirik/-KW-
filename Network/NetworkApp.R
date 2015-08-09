@@ -1,5 +1,4 @@
 ## app.R ##
-# 21.05.2015
 library(shiny)
 library(shinydashboard)
 library(networkD3)
@@ -14,22 +13,18 @@ ui <- dashboardPage(
   ## Sidebar content--------------------------------------------------------------------------------
   dashboardSidebar(
     sidebarMenu(
+      #template:
+      #menuItem("Popisek Itemu", tabName="názevProKód",icon=icon("jménoIkony"),
+      #  menuSubItem("K-means",tabName="K-means",icon=icon("gears")) 
+      #)
       menuItem("About", tabName="About",icon=icon("file")
       ),
-      menuItem("Simple Network", tabName = "SimpleNetwork", icon = icon("arrows-alt") #,
-        #menuSubItem("K-means",tabName="K-means",icon=icon("gears"))                      
+      menuItem("Simple Network", tabName = "SimpleNetwork", icon = icon("arrows-alt") #,                    
       ),
       menuItem("Force Network", tabName = "ForceNetwork", icon = icon("arrows-alt") #,
-        #menuSubItem("AGNES",tabName="AGNES",icon=icon("gears")),
-        #menuSubItem("DIANA",tabName="DIANA",icon=icon("gears"))
-      ),
-      
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Widgets", icon = icon("th"), tabName = "widgets",
-               badgeLabel = "new", badgeColor = "green")
+      )
     )
   ),
-  
   
   ## Body content-----------------------------------------------------------------------------------
   dashboardBody(
@@ -62,15 +57,6 @@ ui <- dashboardPage(
             textInput("text", "Text input:")
           )
         )
-      ),
-      
-      tabItem(tabName = "dashboard",
-              h2("Dashboard tab content")
-      ),
-      
-      
-      tabItem(tabName = "widgets",
-              h2("Widgets tab content")
       )      
     )
   )  
