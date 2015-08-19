@@ -57,7 +57,7 @@ ui <- dashboardPage(
       ),
       
       #Simple Network content-----------------------------------------------------------------------
-      tabItem(tabName="SimpleNetwork",
+      tabItem(tabName="SimpleNetwork",              
         fluidRow(        
           box(
             title="Natavení",
@@ -69,7 +69,7 @@ ui <- dashboardPage(
             #br(), 
             #"More box content",
             sliderInput(inputId="sliderSimpleLength", label="Délka hran:", 100, min=0, max=300, step=10)
-          ),
+          ),          
           box(
             title="Nastavení",
             solidHeader=TRUE,
@@ -97,6 +97,12 @@ ui <- dashboardPage(
         fluidRow(
           box(
             simpleNetworkOutput("obrSimple",width="100%",height="850px"),
+            tags$script('
+              document.getElementById("obrSimple").onclick = function() {
+                var number = Math.random();
+                Shiny.onInputChange("mydata", d.index);
+              };
+            '),
             width=12
           )
         )
@@ -170,6 +176,7 @@ ui <- dashboardPage(
       
       #Collapsible Force network content------------------------------------------------------------
       tabItem(tabName="CollapsibleForceNetwork",
+              verbatimTextOutput("results"),
         fluidRow(
 #           singleton(tags$head(
 #             #adds the d3 library needed to draw the plot

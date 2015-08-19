@@ -91,6 +91,7 @@ server <- function(input, output) {
   })
   
   output$obrForceCollapsible<-renderForceNetwork({
+    MyClickScript <- 'Shiny.onInputChange("mydata", d.name);'
     forceNetwork(Links = MyLinks, Nodes = MyNodes,
                  Source = "source", Target = "target",
                  NodeID = "name", zoom=TRUE,
@@ -98,7 +99,12 @@ server <- function(input, output) {
                  Group = "sex", 
                  colourScale=JS("d3.scale.category10()"),
                  height=NULL, bounded=FALSE, width=NULL,legend=TRUE,
-                 Nodesize="size")
+                 Nodesize="size",
+                 clickAction=MyClickScript)
+  })
+  
+  output$results <- renderPrint({
+    input$mydata
   })
 }
 
