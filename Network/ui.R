@@ -6,7 +6,7 @@ library(networkD3)
 #
 library(RCurl)
 
-ui <- dashboardPage(
+ui <- dashboardPage(  
   ## -----------------------------------------------------------------------------------------------
   ##celkový vzhled----------------------------------------------------------------------------------
   ## -----------------------------------------------------------------------------------------------
@@ -31,6 +31,8 @@ ui <- dashboardPage(
       menuItem("Simple Network", tabName = "SimpleNetwork", icon = icon("arrows-alt") #,                    
       ),
       menuItem("Complicated Network", tabName = "ForceNetwork", icon = icon("arrows-alt") #,
+      ),
+      menuItem("Collapsible Network", tabName="CollapsibleForceNetwork",icon=icon("arrows-alt")
       )
     )
   ),
@@ -163,6 +165,28 @@ ui <- dashboardPage(
             forceNetworkOutput("obrForce",width="100%",height="850px"),
             width=12         
           )      
+        )
+      ),
+      
+      #Collapsible Force network content------------------------------------------------------------
+      tabItem(tabName="CollapsibleForceNetwork",
+        fluidRow(
+#           singleton(tags$head(
+#             #adds the d3 library needed to draw the plot
+#             tags$script(src="http://d3js.org/d3.v3.min.js"),
+#             
+#             #the js script holding the code to make the custom output
+#             tags$script(src="d3.js"),
+#             
+#             #the stylesheet, paste all that was between the <style> tags from your example in the graph_style.css file
+#             tags$link(rel = "stylesheet", type = "text/css", href = "graph_style.css")
+#           )),
+          box(
+            #div(id="obrForceCollapsible",class="d3.forceNetwork"),
+            height=500,
+            forceNetworkOutput("obrForceCollapsible",width="100%",height="850px"),
+            width=12
+          )
         )
       )
     )

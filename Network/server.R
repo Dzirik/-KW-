@@ -89,6 +89,17 @@ server <- function(input, output) {
                    charge=-20*input$sliderForceAttraction)
     }
   })
+  
+  output$obrForceCollapsible<-renderForceNetwork({
+    forceNetwork(Links = MyLinks, Nodes = MyNodes,
+                 Source = "source", Target = "target",
+                 NodeID = "name", zoom=TRUE,
+                 Value = "friends", 
+                 Group = "sex", 
+                 colourScale=JS("d3.scale.category10()"),
+                 height=NULL, bounded=FALSE, width=NULL,legend=TRUE,
+                 Nodesize="size")
+  })
 }
 
 #shinyApp(ui, server)
