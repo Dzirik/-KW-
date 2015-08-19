@@ -94,7 +94,7 @@ ui <- dashboardPage(
         
         fluidRow(
           box(
-            simpleNetworkOutput("obrSimple"),
+            simpleNetworkOutput("obrSimple",width="100%",height="850px"),
             width=12
           )
         )
@@ -132,7 +132,7 @@ ui <- dashboardPage(
             "Můžete nastavit průhlednost grafu.", 
             #br(), 
             #"More box content",
-            sliderInput(inputId="sliderForceOpacity", label="Průhlednost:", 0.5, min=0, max=1, step=0.1)
+            sliderInput(inputId="sliderForceOpacity", label="Průhlednost:", 0.75, min=0, max=1, step=0.1)
           ),
           box(
             title="Nastavení",
@@ -160,9 +160,8 @@ ui <- dashboardPage(
         
         fluidRow(
           box(
-            forceNetworkOutput("obrForce"),
-            width=12,
-            height=1000            
+            forceNetworkOutput("obrForce",width="100%",height="850px"),
+            width=12         
           )      
         )
       )
