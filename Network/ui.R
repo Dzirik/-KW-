@@ -7,13 +7,19 @@ library(networkD3)
 library(RCurl)
 
 ui <- dashboardPage(
+  ## -----------------------------------------------------------------------------------------------
   ##celkový vzhled----------------------------------------------------------------------------------
+  ## -----------------------------------------------------------------------------------------------
   skin="yellow",
   
+  ## -----------------------------------------------------------------------------------------------
   ## Header content---------------------------------------------------------------------------------
+  ## -----------------------------------------------------------------------------------------------
   dashboardHeader(title = "Network Visualization"),
   
+  ## -----------------------------------------------------------------------------------------------
   ## Sidebar content--------------------------------------------------------------------------------
+  ## -----------------------------------------------------------------------------------------------
   dashboardSidebar(
     sidebarMenu(
       #template:
@@ -24,41 +30,65 @@ ui <- dashboardPage(
       ),
       menuItem("Simple Network", tabName = "SimpleNetwork", icon = icon("arrows-alt") #,                    
       ),
-      menuItem("Force Network", tabName = "ForceNetwork", icon = icon("arrows-alt") #,
+      menuItem("Complicated Network", tabName = "ForceNetwork", icon = icon("arrows-alt") #,
       )
     )
   ),
   
+  ## -----------------------------------------------------------------------------------------------
   ## Body content-----------------------------------------------------------------------------------
+  ## -----------------------------------------------------------------------------------------------
   dashboardBody(
     tabItems(
-      #About content
+      #About content--------------------------------------------------------------------------------
       tabItem(tabName="About",
         box(
-          title="About this program.",
-          "This is an example of visualization graphs using shiny and network3D.",
+          title="O programu.",
+          "Jednoduchá ukázka programu a rozhraní na vizualizaci a práci se sítěmi/grafy.",
           br(),
-          "I used only simple data, which I personaly generated or taken from RCurl package from R.
-          The reason for this was that I wanted only easily obtained small data sets and spent much 
-          time with plaing with their visualization.",
+          "Data jsou mé vlastní \"výroby\".",
           br(),
-          "The advantage of this approach is interactivity, just play with nodes, edges, and network using a mouse.",
+          "Obrouvskou výhodou je interaktivita - uživatel může pracovat s grafem, vybírat si prvky,
+          které ho zajímají.",
           width=12
         )
       ),
       
-      #Simple Network content
+      #Simple Network content-----------------------------------------------------------------------
       tabItem(tabName="SimpleNetwork",
         fluidRow(        
           box(
-            title="Settings",
+            title="Natavení",
             solidHeader=TRUE,
             collapsible=TRUE,
             height=200,
-            "You can choose distance of edges in the graph below.", 
+            width=4,
+            "Níže můžete nastavit délku hran mezi uzly.", 
             #br(), 
             #"More box content",
-            sliderInput(inputId="sliderSimple", label="Edge distance:", 150, min=0, max=300, step=10)
+            sliderInput(inputId="sliderSimpleLength", label="Délka hran:", 100, min=0, max=300, step=10)
+          ),
+          box(
+            title="Nastavení",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=200,
+            width=4,
+            "Níže můžete nastavit, jak moc se uzly odpuzují/přitahují.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderSimpleAttraction", label="Míra odpuzení:", 50, min=-100, max=100, step=5)
+          ),
+          box(
+            title="Nastavení",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=200,
+            width=4,
+            "Níže můžete nastavit velikost písma.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderSimpleFontSize", label="Velikost písma:", 20, min=10, max=30, step=1)
           )
         ),
         
@@ -70,35 +100,69 @@ ui <- dashboardPage(
         )
       ),
       
-      #Force network content
+      #Force network content------------------------------------------------------------------------
       tabItem(tabName="ForceNetwork",
-        fluidRow(        
+        fluidRow( 
           box(
-            title="Settings",
+            title="Nastevení",
             solidHeader=TRUE,
             collapsible=TRUE,
             height=200,
-            "You can choose opacity for the graph below.", 
+            width=2,
+            "Můžete vybrat příslušnost uzlů do skupin.",
+            selectInput(inputId="selectForceGroup",label="Skupina:",choices=list("Koníček"=1,"Pohlaví"=2))
+          ),
+          box(
+            title="Natavení",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=200,
+            width=2,
+            "Níže můžete nastavit velikost písma.", 
             #br(), 
             #"More box content",
-            sliderInput(inputId="sliderOpacity", label="Opacity:", 0.5, min=0, max=1, step=0.1)
+            sliderInput(inputId="sliderForceFontSize", label="Velikost písma:", 20, min=10, max=30, step=1)
           ),
-          
           box(
-            title="Data Description",
+            title="Nastavení",
             solidHeader=TRUE,
-            collapsing=TRUE,
+            collapsible=TRUE,
             height=200,
-            "A data file of links from Knuth's Les Miserables characters data base.",
-            br(),
-            "A data set with 254 observations of 3 variables."
+            width=2,
+            "Můžete nastavit průhlednost grafu.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderForceOpacity", label="Průhlednost:", 0.5, min=0, max=1, step=0.1)
+          ),
+          box(
+            title="Nastavení",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=200,
+            width=2,
+            "Níže můžete nastavit délku hran mezi uzly.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderForceLength", label="Délka hran:", 100, min=0, max=300, step=10)
+          ),
+          box(
+            title="Nastavení",
+            solidHeader=TRUE,
+            collapsible=TRUE,
+            height=200,
+            width=4,
+            "Níže můžete nastavit, jak moc se uzly odpuzují/přitahují.", 
+            #br(), 
+            #"More box content",
+            sliderInput(inputId="sliderForceAttraction", label="Míra odpuzení:", 50, min=-100, max=100, step=5)
           )
         ),
         
         fluidRow(
           box(
             forceNetworkOutput("obrForce"),
-            width=12
+            width=12,
+            height=1000            
           )      
         )
       )
