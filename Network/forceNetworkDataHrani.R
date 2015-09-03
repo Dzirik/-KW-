@@ -5,6 +5,8 @@
 #                  Characters=character(),
 #                  stringsAsFactors=FALSE)
 
+#03.09.2015
+
 MyLinks<-data.frame(source=integer(),
                     target=integer(),
                     value=double(),
