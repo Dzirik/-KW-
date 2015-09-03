@@ -6,6 +6,14 @@
 #                  stringsAsFactors=FALSE)
 
 #03.09.2015
+#setwd("C:\\Users\\Jiri\\Documents\\GitHub\\-KW-\\Network")
+#ctrl+shift;c
+#   library(knitr)
+#   render("minimal.Rmd")
+#   render("minimal.Rmd","pdf_document")
+#   rmarkdown::render("minimal.Rmd")
+#   rmarkdown::render("minimal.Rmd","pdf_document")
+
 
 MyLinks<-data.frame(source=integer(),
                     target=integer(),
